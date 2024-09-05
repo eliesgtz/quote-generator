@@ -22,28 +22,34 @@ function newQuote() {
     showLoadingSpinner();
     // Pick a random quote from apiQuotes array
     const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
+    const text = quote.quote
+    const author = quote.source
+
     // Check if author field is blank and replace with 'Unknown'
-    if (!quote.author) {
+    if (!author) {
         authorText.textContent = "Unknown";
     } else {
-        authorText.textContent = quote.author;
+        authorText.textContent = author;
     }
+   
     // Check Quote length to determine styling
-    if (quote.text.length > 120) {
+    if (quote.quote.length > 120) {
         quoteText.classList.add('long-quote');
     } else {
         quoteText.classList.remove('long-quote');
     }
 
     // Set Quote, Hide Loader
-    quoteText.textContent = quote.text;
+    quoteText.textContent = text;
     hideLoadingSpinner();
 }
 
 // Get Quotes From API
 async function getQuotes() {
     showLoadingSpinner();
-    const apiURL = "https://jacintodesign.github.io/quotes-api/data/quotes.json";
+    // const apiURL = "https://jacintodesign.github.io/quotes-api/data/quotes.json";
+    const apiURL = "https://philosophy-quotes-api.glitch.me/quotes";
+
     try {
         const response = await fetch(apiURL);
         apiQuotes = await response.json();
