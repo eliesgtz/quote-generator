@@ -3,13 +3,25 @@ const quoteText = document.getElementById('quote');
 const authorText = document.getElementById('author');
 const twitterBtn = document.getElementById('twitter');
 const newQuoteBtn = document.getElementById('new-quote')
+const loader = document.getElementById('loader');
 
 let apiQuotes = [];
 
+function showLoadingSpinner() {
+    loader.hidden = false;
+    quoteContainer.hidden = true;
+}
+
+function hideLoadingSpinner() {
+    quoteContainer.hidden = false;
+    loader.hidden = true;
+}
+
 // Show New Quotes
 function newQuote() {
+    showLoadingSpinner();
     // Pick a random quote from apiQuotes array
-    const quote = localQuotes[Math.floor(Math.random() * localQuotes.length)];
+    const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
     // Check if author field is blank and replace with 'Unknown'
     if (!quote.author) {
         authorText.textContent = "Unknown";
@@ -23,11 +35,14 @@ function newQuote() {
         quoteText.classList.remove('long-quote');
     }
 
+    // Set Quote, Hide Loader
     quoteText.textContent = quote.text;
+    hideLoadingSpinner();
 }
 
 // Get Quotes From API
 async function getQuotes() {
+    showLoadingSpinner();
     const apiURL = "https://jacintodesign.github.io/quotes-api/data/quotes.json";
     try {
         const response = await fetch(apiURL);
@@ -48,6 +63,5 @@ function tweetQuote() {
 newQuoteBtn.addEventListener('click', newQuote);
 twitterBtn.addEventListener('click', tweetQuote);
 
-s
 // On Load
 getQuotes();
