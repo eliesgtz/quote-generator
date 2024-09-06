@@ -23,7 +23,7 @@ function newQuote() {
     // Pick a random quote from apiQuotes array
     const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
     const text = quote.quote
-    const author = quote.source
+    const author = quote.author
 
     // Check if author field is blank and replace with 'Unknown'
     if (!author) {
@@ -48,14 +48,17 @@ function newQuote() {
 async function getQuotes() {
     showLoadingSpinner();
     // const apiURL = "https://jacintodesign.github.io/quotes-api/data/quotes.json";
-    const apiURL = "https://philosophy-quotes-api.glitch.me/quotes";
+    // const apiURL = "https://philosophy-quotes-api.glitch.me/quotes";
+    console.log(apiQuotes);
 
     try {
-        const response = await fetch(apiURL);
-        apiQuotes = await response.json();
+        // const response = await fetch(apiURL);
+        // apiQuotes = await response.json();
+        apiQuotes = babaQuotes;
+        console.log(apiQuotes);
         newQuote();
     } catch (error) {
-        // Catch Error Here
+        console.log(error); // Catch Error Here
     }
 }
 
